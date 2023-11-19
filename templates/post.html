@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+    <style>
+        body{
+    margin: 0;
+    padding-left: 400px;
+    display: flex;
+    width: 500px;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: cadetblue;
+
+}
+
+ul{
+    list-style: none;
+}
+.comm{
+    background-color: burlywood;
+}
+.card {
+    background-color: grey;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    width: 500px;
+    border: 1px solid #ccc;
+    /* margin: auto; */
+}
+.second{
+    position: fixed;
+}
+.hidden {
+    display: none;
+  }
+  .comment{
+      display: none;
+  }
+      </style>
+    <script>
+        function show(index){
+            var myDiv = document.getElementById('comn'+index);
+            myDiv.style.display = (myDiv.style.display === 'none' || myDiv.style.display === '') ? 'block' : 'none';
+ 
+        }
+         
+    </script>
+</head>
+<body id="main">
+    <div class="card">
+    <div class="second">
+    <form method="post">
+        <input type="text" name="textBox" placeholder="Enter text">
+        <button name="b2" type="submit">Create Post</button>
+      <!-- <input type="submit" value="Create Post"> -->
+      </form>
+      <form method="post">
+      <input type="text" name="searchBar" placeholder="Search...">
+        <button type="submit" name="b3">Search</button>
+    </form>
+    <a href="{{url_for('Home')}}"> <button>Back</button></a>
+</div>
+    <h1 class="Uname">{{names}}</h1>
+      <div id="fetchedData" class="container">
+        <h1>{{not_found}}</h1>
+        <h2>See Posts</h2>
+        <ul id="finds">
+            {% if data %}
+          {% for post in data %}
+            <li>Post id{{ post[0] }}</li>
+            <li>UserName={{post[2]}}</li>
+            <li>{{post[1]}}
+                <br><button class="comm" onclick="show('{{post[0]}}')">Comments</button>
+                <div class="comment" id="comn{{post[0]}}">
+                    <h1>{{nots}}</h1>
+                   <p> See Comments</p>
+                    <ul>
+                        {% if com %}
+                        {% for row in com %}
+                        {%if row[0]==post[0]%}
+                        <li>User Name:{{ row[2] }}</li>
+                        <li>{{ row[1] }}</li>
+                        {%endif%}
+                        {% endfor %}
+                    </ul>
+                    
+                    {% else %}
+                        <p>No data found.</p>
+                    {% endif %}
+                    <form method="Post">                       
+                        <input type="text" name="pid" value='{{post[0]}}' style="display: none;">
+                        <input type="text" name="commentBox" placeholder="Enter text">
+                        <button name="b1">Add Comment</button>
+                    </form>
+
+                </div>
+            </li>
+            <hr>
+          {% endfor %}
+        </ul>
+        
+        {% else %}
+        <!-- <script>window.alert('no data found')</script> -->
+            <p>No data found. Create Post about what you search
+            </p>
+        {% endif %}
+      </div>
+    </div>
+    </body>
+</html>
