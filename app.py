@@ -4,7 +4,7 @@ import mysql.connector
 # import requests
 db = mysql.connector.connect(
     host="localhost",
-    port="3306",
+    port="36000",
     user="root",
     password="Krushna",
     database="social"
