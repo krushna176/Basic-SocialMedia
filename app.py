@@ -76,5 +76,5 @@ def Posts():
             return f"An error occurred: {err}"
         
 
-        
+        app.run(debug=False,host='0,0,0,0')
        
